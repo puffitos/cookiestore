@@ -21,7 +21,7 @@ spec:
           - 1000
       containers:
         - name: cookiestore-container
-          image: mtr.devops.telekom.de/caas/cookiestore:latest
+          image: mtr.devops.telekom.de/caas/cookiestore:0.0.1
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
