@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cookiestore-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cookiestore
+  template:
+    metadata:
+      labels:
+        app: cookiestore
+    spec:
+      securityContext:
+        runAsUser: 1002
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+        supplementalGroups:
+          - 1000
+      containers:
+        - name: cookiestore-container
+          image: mtr.devops.telekom.de/caas/cookiestore:latest
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            privileged: false
+            capabilities:
+              drop:
+                - all
