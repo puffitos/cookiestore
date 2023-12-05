@@ -19,9 +19,15 @@ spec:
         runAsNonRoot: true
         supplementalGroups:
           - 1000
+      volumes:
+        - name: tmp
+          emptyDir: {}
       containers:
         - name: cookiestore-container
-          image: mtr.devops.telekom.de/caas/cookiestore:latest
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+          image: mtr.devops.telekom.de/caas/cookiestore:0.0.1
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -29,3 +35,10 @@ spec:
             capabilities:
               drop:
                 - all
+          resources:
+            limits:
+              memory: "650Mi"
+              cpu: "500m"
+            requests:
+              memory: "650Mi"
+              cpu: "250m"

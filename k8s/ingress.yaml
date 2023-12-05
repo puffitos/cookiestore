@@ -4,7 +4,7 @@ metadata:
   name: cookiestore-ingress
 spec:
   rules:
-    - host: cookies.t21-caas.telekom.de
+    - host: cookies.caas-t21.telekom.de
       http:
         paths:
           - path: /
