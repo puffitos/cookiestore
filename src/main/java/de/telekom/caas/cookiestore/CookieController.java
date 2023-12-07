@@ -1,12 +1,11 @@
 package de.telekom.caas.cookiestore;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CookieController {
@@ -22,8 +21,15 @@ public class CookieController {
         return cookieRepository.findAll();
     }
 
-    @GetMapping("/cookie/{id}")
-    public Cookie getCookieById(@PathVariable Long id) {
-        return cookieRepository.findById(id).orElseThrow();
+    @GetMapping("/cookies/{id}")
+    public Cookie getCookieById(@PathVariable Long id) throws CookieNotFoundException {
+        Optional<Cookie> c = cookieRepository.findById(id);
+        // return cookie, if found, else return 404
+        if (c.isPresent()) {
+            return c.get();
+        }
+
+        throw new CookieNotFoundException();
+
     }
 }
